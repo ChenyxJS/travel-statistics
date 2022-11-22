@@ -1,5 +1,5 @@
 <template>
-  <div class="containner">
+  <div class="panel_containner">
     <div class="header">
       <div class="driver"></div>
       <p class="title">{{title}}</p>
@@ -24,9 +24,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.containner {
+.panel_containner {
   display: flex;
   flex-direction: column;
+  height: 100%;
   .header {
     display: flex;
     align-items: center;

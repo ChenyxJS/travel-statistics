@@ -1,0 +1,29 @@
+.flex{
+    display: flex;
+    &-justify-center{
+        justify-content: center;
+    }
+    &-align-center{
+        align-items: center;
+    }
+    &-cc{
+        justify-content: center;
+        align-items: center;
+    }
+    &-sc{
+        justify-content: space-around;
+        align-items: center;
+    }
+    &-ss{
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+    &-sbc{
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+.flex-clo{
+    display: flex;
+    flex-direction: column;
+}
