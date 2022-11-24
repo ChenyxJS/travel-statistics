@@ -1,20 +1,38 @@
 <template>
   <div class="containner flex-clo">
-    <div class="containner-header"></div>
+    <div class="containner-header flex flex-cc">
+      <svg-icon icon-name="header_border" icon-size="40"></svg-icon>
+
+      <div class="glass_bg">Travel-StatisticsTravel-Statistics</div>
+      <div class="header_text">Travel Statistics</div>
+    </div>
     <div class="main flex flex-sbc">
       <div class="left clo-10 flex-clo">
         <div class="clo-3">
           <div class="progress flex-clo">
-            <div class="title">
+            <div class="title flex flex-align-center">
               <h1>佛山市</h1>
+              <svg-icon
+                icon-name="echange"
+                style="margin-left: 10px"
+                icon-size="30"
+              ></svg-icon>
             </div>
             <div class="content">
-              <p>累计在该城市提供服务</p>
+              <p>累计在该城市停留</p>
               <p>08<span>年</span>06<span>月</span>178<span>天</span></p>
-              <Progress style="width: 200px;margin-bottom: 10px;"></Progress>
+              <Progress style="width: 200px; margin-bottom: 10px"></Progress>
               <div class="text">
-                <p style="display:inline">当前在线人数</p>
-                {{ "187,52" }}<span>人</span>
+                <p style="display: inline">当前在线人数</p>
+                {{ "187,52" }}<span>人</span
+                ><span
+                  :style="{
+                    color: '#67C23A',
+                    marginLeft: '5px',
+                    fontWeight: 600,
+                  }"
+                  >↑34</span
+                >
               </div>
             </div>
           </div>
@@ -22,10 +40,32 @@
         <div class="clo-2_6 flex flex-align-center">
           <el-progress
             type="circle"
+            color="#536DFE"
             stroke-width="8"
             width="90"
             :percentage="78"
           />
+          <div class="bg_box"></div>
+          <div class="left2_content flex-clo">
+            <div class="content-top flex-clo">
+              <p>
+                {{ "420,57"
+                }}<span :style="{ color: '#F56C6C', fontWeight: 600 }"
+                  >↓23</span
+                >
+              </p>
+              <span>当前在线人数</span>
+            </div>
+            <div class="content-bottom flex-clo">
+              <p>
+                {{ "420,547"
+                }}<span :style="{ color: '#67C23A', fontWeight: 600 }"
+                  >↑34</span
+                >
+              </p>
+              <span>总人数</span>
+            </div>
+          </div>
         </div>
         <div class="clo-4">
           <data-panel title="千里之行始于足下">
@@ -85,7 +125,7 @@
             </div>
             <div class="accumulate-panel-right flex-clo flex-cc">
               <div style="color: #fff" class="text">{{ "148,75" }}</div>
-              <p>累计服务客户</p>
+              <p>累计出行距离</p>
             </div>
           </div>
           <div class="accumulate-panel panel flex flex-align-center">
@@ -94,7 +134,7 @@
             </div>
             <div class="accumulate-panel-right flex-clo flex-cc">
               <div style="color: #fff" class="text">{{ "148,75" }}</div>
-              <p>累计服务客户</p>
+              <p>累计出行距离</p>
             </div>
           </div>
         </div>
@@ -118,7 +158,7 @@
                   </div>
                   <div class="bar-panel-bottom flex-clo flex-cc">
                     <div class="text">{{ "1475" }}<span>米</span></div>
-                    <p>累计服务客户</p>
+                    <p>累计出行距离</p>
                   </div>
                 </div>
                 <div class="bar-panel panel flex-clo flex-cc">
@@ -127,7 +167,7 @@
                   </div>
                   <div class="bar-panel-bottom flex-clo flex-cc">
                     <div class="text">{{ "1875" }}<span>米</span></div>
-                    <p>累计服务客户</p>
+                    <p>累计出行距离</p>
                   </div>
                 </div>
               </div>
@@ -162,6 +202,42 @@ import { defineComponent, onMounted } from "vue";
 import DataPanel from "@/components/data-panel/index.vue";
 import Bars from "@/components/bars/index.vue";
 import Progress from "@/components/progress/index.vue";
+
+//一个包含两个到多个二维坐标的数组
+var path3 = [
+  {
+    fromName: "上海",
+    toName: "山东",
+    coords: [
+      [121.4771, 31.2278],
+      [117.001, 36.6885],
+    ],
+  },
+  {
+    fromName: "山东",
+    toName: "河南",
+    coords: [
+      [117.001, 36.6885],
+      [113.6806, 34.7553],
+    ],
+  },
+  {
+    fromName: "河南",
+    toName: "宁夏",
+    coords: [
+      [113.6806, 34.7553],
+      [106.2196, 38.4879],
+    ],
+  },
+  {
+    fromName: "宁夏",
+    toName: "新疆",
+    coords: [
+      [106.2196, 38.4879],
+      [87.6007, 43.8223],
+    ],
+  },
+];
 
 export default defineComponent({
   components: {
@@ -208,24 +284,24 @@ export default defineComponent({
               {
                 lt: 5,
                 label: "<5家",
-                color: "#536DFE",
+                color: "#96b9ff",
               },
               {
                 gte: 5,
                 lt: 10,
                 label: "5-10家",
-                color: "#2196F3",
+                color: "#637fe3",
               },
               {
                 gte: 10,
                 lt: 20,
                 label: "10-20家",
-                color: "#1976D2",
+                color: "#6283e8",
               },
               {
                 gte: 20,
                 label: "20家以上",
-                color: "#1976D2",
+                color: "#4774d9",
               },
             ],
           },
@@ -271,10 +347,9 @@ export default defineComponent({
           series: [
             // 此处为真正的地图
             {
-              name: "门店区域分布数", // 浮动框的标题
+              name: "城市", // 浮动框的标题
               type: "map",
               map: "china",
-              // geoIndex: 0,
               zoom: 1.1,
               zlevel: 0, // 设置地图的层级，将该地图上移（类似z-index）
               emphasis: {
@@ -296,18 +371,18 @@ export default defineComponent({
               itemStyle: {
                 // 地图的样式
                 normal: {
+                  areaColor: "#96b9ff",
                   borderColor: "#FFFFFF", // 省份边框颜色
                   borderWidth: 0.5, // 省份边框宽度
                   shadowColor: "rgba(100,255,238,0.5)", // 省份边框阴影
-                  shadowBlur: 5, // 省份边框聚焦
                 },
                 emphasis: {
                   // 鼠标hover显示
                   show: false,
-                  areaColor: "#FFFFFF",
+                  areaColor: "#96b9ff",
                   color: "#00114F",
                   textStyle: {
-                    color: "#00114F",
+                    color: "#FFFFFF",
                   },
                 },
               },
@@ -319,48 +394,110 @@ export default defineComponent({
                       opacity: 0,
                       label: { show: false },
                       borderWidth: "0",
-                      borderColor: "#10242b",
+                      borderColor: "#fff",
                       areaStyle: { color: "#10242b" },
                     },
                     emphasis: { opacity: 0, label: { show: false } },
                   },
                 },
-
-                { name: "广东", value: "150" },
-                { name: "江苏", value: "30" },
-                { name: "浙江", value: "20" },
-                { name: "山东", value: "60" },
-                { name: "安徽", value: "5" },
-                { name: "湖北", value: "16" },
-                { name: "重庆", value: "10" },
-                { name: "湖南", value: "55" },
-                { name: "河南", value: "11" },
-                { name: "北京", value: "22" },
-                { name: "天津", value: "22" },
-                { name: "上海", value: "71" },
-                { name: "河北", value: "4" },
-                { name: "云南", value: "115" },
-                { name: "辽宁", value: "7" },
-                { name: "黑龙江", value: "42" },
-                { name: "新疆", value: "22" },
-                { name: "江西", value: "11" },
-                { name: "广西", value: "33" },
-                { name: "甘肃", value: "155" },
-                { name: "山西", value: "170" },
-                { name: "内蒙古", value: "33" },
-                { name: "陕西", value: "85" },
-                { name: "吉林", value: "12" },
-                { name: "福建", value: "31" },
-                { name: "贵州", value: "25" },
-                { name: "青海", value: "22" },
-                { name: "西藏", value: "61" },
-                { name: "四川", value: "2" },
-                { name: "宁夏", value: "95" },
-                { name: "海南", value: "32" },
-                { name: "台湾", value: "42" },
-                { name: "香港", value: "36" },
-                { name: "澳门", value: "29" },
-                { name: "南海诸岛", value: "1" },
+                // { name: "广东", value: "3" },
+                // { name: "江苏", value: "3" },
+                // { name: "浙江", value: "2" },
+                // { name: "山东", value: "0" },
+                // { name: "安徽", value: "5" },
+                { name: "湖北", value: "10" },
+                // { name: "重庆", value: "0" },
+                // { name: "湖南", value: "5" },
+                // { name: "河南", value: "1" },
+                // { name: "北京", value: "9" },
+                { name: "天津", value: "12" },
+                // { name: "上海", value: "1" },
+                // { name: "河北", value: "7" },
+                { name: "云南", value: "15" },
+                // { name: "辽宁", value: "7" },
+                // { name: "黑龙江", value: "2" },
+                // { name: "新疆", value: "12" },
+                // { name: "江西", value: "1" },
+                // { name: "广西", value: "3" },
+                // { name: "甘肃", value: "522" },
+                // { name: "山西", value: "1" },
+                { name: "内蒙古", value: "18" },
+                // { name: "陕西", value: "5" },
+                // { name: "吉林", value: "2" },
+                { name: "福建", value: "111" },
+                // { name: "贵州", value: "5" },
+                // { name: "青海", value: "2" },
+                // { name: "西藏", value: "122" },
+                // { name: "四川", value: "2" },
+                // { name: "宁夏", value: "511" },
+                // { name: "海南", value: "2" },
+                // { name: "台湾", value: "2" },
+                // { name: "香港", value: "6" },
+                // { name: "澳门", value: "9" },
+              ],
+            },
+            {
+              type: "lines",
+              //折线图中的所有图形的zlevel的值，用于canvas分层，不同zlevel值的图形会放置在不同的canvas中，zLevel大的canvas会防在zLevel小的canvas的上面
+              zlevel: 1,
+              //特效
+              effect: {
+                //是否显示特效
+                show: true,
+                //特效动画的时间
+                period: 6,
+                //特效尾迹的长度，取向从0到1的值，数值越大尾迹越长
+                trailLength: 0.7,
+                color: "red", //arrow箭头的颜色
+                //线两端的标记大小，可以是一个数组分别指向两端，也可以是单个统一指定。
+                symbolSize: 8,
+              },
+              //类似于线段头部或尾部所标记的图形
+              symbol: ["none", "arrow"],
+              lineStyle: {
+                normal: {
+                  //线条颜色
+                  color: "blue",
+                  opacity: 1,
+                  //线条宽度
+                  width: 12,
+                  //线条是否有弧度
+                  curveness: 0.4,
+                },
+              },
+              data: [
+                {
+                  fromName: "上海",
+                  toName: "山东",
+                  coords: [
+                    [121.4648, 31.2891],
+                    [118.2402, 36.2307],
+                  ],
+                },
+                {
+                  fromName: "山东",
+                  toName: "河南",
+                  coords: [
+                    [117.001, 36.6885],
+                    [113.6806, 34.7553],
+                  ],
+                },
+                {
+                  fromName: "河南",
+                  toName: "宁夏",
+                  coords: [
+                    [113.6806, 34.7553],
+                    [106.2196, 38.4879],
+                  ],
+                },
+                {
+                  fromName: "宁夏",
+                  toName: "新疆",
+                  coords: [
+                    [106.2196, 38.4879],
+                    [87.6007, 43.8223],
+                  ],
+                },
               ],
             },
           ],
@@ -445,9 +582,9 @@ export default defineComponent({
       { id: 4, height: 60 },
       { id: 5, height: 80 },
       { id: 6, height: 60 },
-      { id: 7, height: 40 },
+      { id: 7, height: 100 },
       { id: 8, height: 30 },
-      { id: 9, height: 10 },
+      { id: 9, height: 60 },
     ];
     return { bars1, bars2 };
   },
@@ -455,6 +592,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.bg_box {
+  position: relative;
+  left: -40px;
+  width: 100px;
+  height: 100px;
+  z-index: 0;
+  background-color: #448aff;
+  filter: blur(60px);
+}
 .containner {
   width: 100%;
   height: 100%;
@@ -465,6 +611,23 @@ export default defineComponent({
   overflow: hidden;
   &-header {
     height: 60px;
+    color: #448aff;
+    font-size: 26px;
+    font-weight: bold;
+    .header_text {
+      position: absolute;
+      z-index: 9;
+      width: 100%;
+      text-align: center;
+    }
+    .glass_bg {
+      position: absolute;
+      z-index: 0;
+      height: 60px;
+      width: 100%;
+      filter: blur(20px);
+      text-align: center;
+    }
   }
   .main {
     flex: 1;
@@ -534,10 +697,6 @@ export default defineComponent({
   display: grid;
   grid-template-rows: repeat(2, 120px);
   grid-template-columns: repeat(2, 230px);
-  // display: flex;
-  // justify-content: space-between;
-  // align-items: center;
-  // width: 400px;
 }
 .panel {
   padding: 10px 15px;
@@ -586,6 +745,22 @@ export default defineComponent({
     }
   }
 }
+.left2_content {
+  position: absolute;
+  margin-left: 120px;
+  p {
+    font-size: 20px;
+    font-weight: 600;
+    span {
+      margin-left: 5px;
+    }
+  }
+  span {
+    font-weight: 300;
+    font-size: 10px;
+  }
+}
+
 .total-panel {
   // width: 50%;
   .header {
